@@ -37,18 +37,22 @@ DROP TABLE IF EXISTS transactions;
 CREATE TABLE
 	transactions
 (
+	tid BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	date DATETIME NOT NULL,
 	uid BIGINT NOT NULL REFERENCES users(uid),
 	iid BIGINT NOT NULL REFERENCES items(iid),
-	amount BIGINT NOT NULL, -- scale: 0.1 
-	price BIGINT NOT NULL, -- in 0.1 euro cent
-	type TEXT NOT NULL -- 'purchase', 'cancel', 'pay', ''
+	amount BIGINT, -- scale: 0.1 
+	price BIGINT, -- in 0.1 euro cent
+	type TEXT NOT NULL, -- 'purchase', 'cancel', 'pay', ''
+	rtid BIGINT REFERENCES transactions(tid) 
 );
 
-INSERT INTO transactions VALUES (NOW(), 4, 4, 10, 30, 'purchase');
-INSERT INTO transactions VALUES (NOW(), 4, 4, 10, 30, 'purchase');
-INSERT INTO transactions VALUES (NOW(), 4, 4, 10, 30, 'cancel');
-INSERT INTO transactions values (NOW(), 4, 3, 10, 30, 'pay'); 
+INSERT INTO transactions VALUES (4, NOW(), 4, 4, 10, 300, 'purchase', NULL);
+INSERT INTO transactions VALUES (5, NOW(), 4, 4, 10, 300, 'purchase', NULL);
+INSERT INTO transactions VALUES (6, NOW(), 4, 4, NULL, NULL, 'cancel', 5);
+INSERT INTO transactions values (7, NOW(), 4, 3, 10, 300, 'pay', NULL); 
+
+ALTER TABLE transactions AUTO_INCREMENT = 10;
 
 DROP TABLE IF EXISTS price;
 CREATE TABLE
@@ -59,9 +63,9 @@ CREATE TABLE
 	date DATETIME NOT NULL
 );
 
-INSERT INTO price VALUES (4, 400, '2012-10-03 18:26:58');
-INSERT INTO price VALUES (5, 20, '2012-10-03 18:26:59');
-INSERT INTO price VALUES (4, 30, '2012-10-03 18:27:58');
+INSERT INTO price VALUES (4, 4000, '2012-10-03 18:26:58');
+INSERT INTO price VALUES (5, 200, '2012-10-03 18:26:59');
+INSERT INTO price VALUES (4, 300, '2012-10-03 18:27:58');
 
 DROP TABLE IF EXISTS inventory;
 CREATE TABLE
