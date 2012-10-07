@@ -1,0 +1,72 @@
+body {
+}
+
+li.people {
+  display:inline;
+  float:left;
+}
+
+li.item {
+  display:inline;
+  float:left;
+  width: 150px;
+  height: 100px;
+  border-radius: 10px;
+  margin: 5px;
+  background-color: rgb(175,175,255);
+
+}
+
+li.history {
+}
+
+img.people {
+  margin: 5px; 
+  width: 100px;
+  border-radius: 10px;
+}
+
+img.item{
+  width:100px;
+  height:100px;
+  border-radius: 10px;
+  float: left;
+}
+
+div.item-text {
+  float: left;
+  display: inline;
+  width:50px;
+  height:100px;
+  vertical-align: middle;
+}
+
+div.people_pane {
+  border-radius: 10px;
+  width:30%;
+  display:inline;
+  float:left;
+}
+
+div.item_pane {
+  border-radius: 10px;   
+  width:70%;
+  display:inline;
+  float:left;
+}
+
+div.confirm_pane {
+  border-radius: 10px;   
+  width:30%;
+  display:inline;
+  float:left;
+}
+
+div.history {
+  margin-top: 5px;
+  background-color: rgb(200,200,255);
+  border-radius: 10px;   
+  width:100%;
+  display:inline;
+  float:left;
+}

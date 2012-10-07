@@ -15,7 +15,14 @@ CREATE TABLE
 
 INSERT INTO users VALUES (4, 'fb:1189818408', '<FETCH>', '<FETCH>', '<FETCH>'); -- Mic
 INSERT INTO users VALUES (5, 'fb:1074847871', '<FETCH>', '<FETCH>', '<FETCH>'); -- Majak
-ALTER TABLE users AUTO_INCREMENT = 10;
+INSERT INTO users VALUES (6, 'fb:826414967', '<FETCH>', '<FETCH>', '<FETCH>'); -- Tina
+INSERT INTO users VALUES (7, 'fb:1449635559', '<FETCH>', '<FETCH>', '<FETCH>'); -- Martin Macko
+INSERT INTO users VALUES (8, 'fb:100002512842538', '<FETCH>', '<FETCH>', '<FETCH>'); -- Martin Kravec
+INSERT INTO users VALUES (9, '', 'jaro', 'Jaroslav Budiš','images/JaroslavBudis.jpg'); -- Jaro
+INSERT INTO users VALUES (10, 'fb:600118001', '<FETCH>', '<FETCH>', '<FETCH>'); -- Kuko
+INSERT INTO users VALUES (11, 'fb:587288808', '<FETCH>', '<FETCH>', '<FETCH>'); -- Brona
+INSERT INTO users VALUES (12, 'fb:609663909', '<FETCH>', '<FETCH>', '<FETCH>'); -- Vinko
+ALTER TABLE users AUTO_INCREMENT = 15;
 
 DROP TABLE IF EXISTS items;
 CREATE TABLE 
@@ -37,18 +44,22 @@ DROP TABLE IF EXISTS transactions;
 CREATE TABLE
 	transactions
 (
+	tid BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	date DATETIME NOT NULL,
 	uid BIGINT NOT NULL REFERENCES users(uid),
 	iid BIGINT NOT NULL REFERENCES items(iid),
-	amount BIGINT NOT NULL, -- scale: 0.1 
-	price BIGINT NOT NULL, -- in 0.1 euro cent
-	type TEXT NOT NULL -- 'purchase', 'cancel', 'pay', ''
+	amount BIGINT, -- scale: 0.1 
+	price BIGINT, -- in 0.1 euro cent
+	type TEXT NOT NULL, -- 'purchase', 'cancel', 'pay', ''
+	rtid BIGINT REFERENCES transactions(tid) 
 );
 
-INSERT INTO transactions VALUES (NOW(), 4, 4, 10, 30, 'purchase');
-INSERT INTO transactions VALUES (NOW(), 4, 4, 10, 30, 'purchase');
-INSERT INTO transactions VALUES (NOW(), 4, 4, 10, 30, 'cancel');
-INSERT INTO transactions values (NOW(), 4, 3, 10, 30, 'pay'); 
+INSERT INTO transactions VALUES (4, NOW(), 4, 4, 10, 300, 'purchase', NULL);
+INSERT INTO transactions VALUES (5, NOW(), 4, 4, 10, 300, 'purchase', NULL);
+INSERT INTO transactions VALUES (6, NOW(), 4, 4, NULL, NULL, 'cancel', 5);
+INSERT INTO transactions values (7, NOW(), 4, 3, 10, 300, 'pay', NULL); 
+
+ALTER TABLE transactions AUTO_INCREMENT = 10;
 
 DROP TABLE IF EXISTS price;
 CREATE TABLE
@@ -59,9 +70,9 @@ CREATE TABLE
 	date DATETIME NOT NULL
 );
 
-INSERT INTO price VALUES (4, 400, '2012-10-03 18:26:58');
-INSERT INTO price VALUES (5, 20, '2012-10-03 18:26:59');
-INSERT INTO price VALUES (4, 30, '2012-10-03 18:27:58');
+INSERT INTO price VALUES (4, 4000, '2012-10-03 18:26:58');
+INSERT INTO price VALUES (5, 200, '2012-10-03 18:26:59');
+INSERT INTO price VALUES (4, 300, '2012-10-03 18:27:58');
 
 DROP TABLE IF EXISTS inventory;
 CREATE TABLE
