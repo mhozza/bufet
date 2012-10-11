@@ -15,30 +15,25 @@
     </script>
   </head>
   <body>
-    <h1>Bufet v M-25 (Vyhlasuje sa súťaž na grafický dizajn!)</h1>
     <div class="people_pane" id="people">
-      People
     </div>
     <div class="item_pane" id="items">
-      Items
     </div>
     <div class="confirm_pane" id="confirm">
         <div class="amount" id="amount">
           Množstvo: <span id="amount_val" ></span> <span id="amount_type" ></span> <input type="submit" value="+" onclick="increaseAmount()" /> <input type="submit" value="-" onclick="decreaseAmount()" />
-
         </div>
         <div class="price" id="price">
           Cena za <span id="amount_type" ></span>: <span id="unit_price" ></span><br/>
           Celková cena: <span id="total_price"></span>
         </div>
         <div class="confirm" id="submit">
-          <input type="submit" value="Kúp" onclick="submitOrder()" />
+          <input type="submit" value="Kúp" onclick="submitOrder()"class="buy" />
         </div>
         <div class="confirm" id="balance">
           Bilancia
         </div>
         <div class="confirm" id="payment">
-          
           Chcem zaplatiť do kasičky <input type="number" value="0" id="payment_input"/> €
           <input type="submit" value="Zaplať" onclick="submitPayment()"/>
         </div>

@@ -14,7 +14,6 @@ li.item {
   border-radius: 10px;
   margin: 5px;
   background-color: rgb(175,175,255);
-
 }
 
 li.history {
@@ -22,7 +21,7 @@ li.history {
 
 img.people {
   margin: 5px; 
-  width: 100px;
+  width: 90px;
   border-radius: 10px;
 }
 
@@ -69,4 +68,9 @@ div.history {
   width:100%;
   display:inline;
   float:left;
+}
+
+input.buy {
+  width:100px;
+  height:100px;
 }

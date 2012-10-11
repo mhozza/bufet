@@ -1,6 +1,6 @@
-USE m25bufet;
+USE m25bufetDevel;
 
-ALTER DATABASE m25bufet charset=utf8;
+ALTER DATABASE m25bufetDevel charset=utf8;
 
 DROP TABLE IF EXISTS users;
 CREATE TABLE 
