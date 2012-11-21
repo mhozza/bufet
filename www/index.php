@@ -4,17 +4,31 @@
   <head>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" ></script>
     <script src="js/main.js"></script>
+    <script src="js/jquery.cookie.js"></script>
     <link rel="stylesheet" href="css/main.css" />
     <style type="text/css">
     </style>
     <script>
       $(document).ready(function() {
+        loadParameters(<?php if (isset($_GET['uid'])) {
+          echo($_GET['uid']);
+        } else {
+          echo(0);
+        }?>, <?php
+        if (isset($_GET['iid'])) {
+          echo($_GET['iid']);
+        } else {
+          echo(0);
+        }
+        ?>);
         loadUsers();
         loadItems();
       })
     </script>
   </head>
   <body>
+    <div class="top_bar" id="top_bar"> 
+    </div>
     <div class="people_pane" id="people">
     </div>
     <div class="item_pane" id="items">

@@ -1,4 +1,4 @@
-var selected_uid = 0;
+var selected_uid = 0;//$.cookie("uid");
 var selected_iid = 0;
 var selected_amount = 10;
 var userData = null;
@@ -7,6 +7,16 @@ var itemData = null;
 var itemDataMap = new Array();
 
 // Loading stuff
+
+function loadParameters(uid,iid) {
+  selected_uid = $.cookie("uid");
+  if (uid > 0) {
+    selected_uid = uid;
+  }
+  if (iid > 0) {
+    selected_iid = iid;
+  }
+}
 
 function submitPayment() {
     if (selected_uid <= 0) {
@@ -81,10 +91,17 @@ function reloadConfirmDialog() {
   // If there is something selected, show third pane
   if (selected_uid > 0 || selected_iid > 0) {
     $("div#confirm").show();
-    $("div#items").css("width", "40%");
+    if (selected_uid > 0) {
+        $("div#people").css("width", "15%");
+        $("div#items").css("width", "55%");
+    } else {
+        $("div#people").css("width", "50%");
+        $("div#items").css("width", "20%");
+    }
   } else {
     $("div#confirm").hide('');
     $("div#items").css("width", "70%");
+    $("div#people").css("width", "30%");
   }
   // If both are selected, we can submit
   if (selected_uid > 0 && selected_iid > 0) {
@@ -183,51 +200,84 @@ function drawUsers() {
     return;
   }
   var result = userData;
-  if (selected_uid > 0) {
-    $("div#people").html(
-      $(
-        "<input>",
-        {
-          type:"submit",
-          value:"Zruš výber",
-          class:"reset",
-          click:function(){
-            selected_uid = 0;
-            redrawEverything();
-            $('input#payment_input').attr('value',0);
-          }
-        }
-      )
-    );
-  } else {
-    $("div#people").html("");
-  }
+  $("div#people").html("");
   var ul=$("<ul>");
   for (var i = 0; i < result.length; i++) {
     if (selected_uid > 0 && result[i].uid != selected_uid) {
       continue;
     }
-    ul.append($(
+    li = $(
       "<li>",
       {
         class:"people",
-        click: $.proxy(function(uid) {
-          selected_uid = uid;
-          loadTransactions();
-          drawUsers();
-          reloadConfirmDialog();
-        }, this, result[i].uid)
       }
-    ).append(
+    );
+    if (selected_uid > 0){
+      li.append(
+        $(
+          '<input>',
+          {
+            type:"submit",
+            value:"Zruš výber",
+            class:"reset",
+            click:function(){
+              selected_uid = 0;
+              redrawEverything();
+              $('input#payment_input').attr('value',0);
+            }
+          }
+        )
+      );
+    }
+    li.append(
       $(
         '<img>',
         {
           class:"people",
           alt:result[i].name,
-          src:result[i].picture_url
+          src:result[i].picture_url,
+          click: $.proxy(function(uid) {
+            selected_uid = uid;
+            loadTransactions();
+            drawUsers();
+            reloadConfirmDialog();
+          }, this, result[i].uid)
         }
       )
-    ));
+    );
+    if (selected_uid > 0 && selected_uid != $.cookie("uid")) {
+      li.append(
+        $(
+          '<input>',
+          {
+            type:"submit",
+            value:"Zapamätaj",
+            class:"remember",
+            click:function() {
+              $.cookie("uid", selected_uid, {expires: 365});
+              drawUsers();
+            }
+          }
+        )
+      );
+    }
+    if (selected_uid > 0 && selected_uid == $.cookie("uid")) {
+      li.append(
+        $(
+          '<input>',
+          {
+            type:"submit",
+            value:"Odpamätaj",
+            class:"forget",
+            click:function() {
+              $.cookie("uid", 0, {expires: 365});
+              drawUsers();
+            }
+          }
+        )
+      );
+    }
+    ul.append(li);
   }
   ul.appendTo("div#people");
 }
