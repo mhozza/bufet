@@ -35,6 +35,12 @@ class BufetData {
         if ($cred[0] !== 'fb') {
             return;
         }
+        if ($value['name'] !== '<FETCH>' &&
+            $value['username'] !== '<FETCH>' &&
+            $value['picture_url'] !== '<FETCH>' ) {
+            return;
+        }
+
         $encoded_json = 
             file_get_contents("http://graph.facebook.com/$cred[1]?");
         $dec = json_decode($encoded_json);
@@ -45,9 +51,23 @@ class BufetData {
             $value['username'] = $dec->{'username'};
         }
         if ($value['picture_url'] === '<FETCH>') {
-            $value['picture_url'] = 
+            $public_url = 
                 "http://graph.facebook.com/$cred[1]/picture?type=normal";
+            $data=file_get_contents($public_url);
+            $filename="../images/$cred[1].jpg";
+            file_put_contents($filename, $data);
+            $value['picture_url'] = "images/$cred[1].jpg";
         }
+        $this->updateUserData($value);
+    }
+
+    public function updateUserData($value) {
+        $sel = $this->PDO->prepare('UPDATE users SET name=:NAME , username=:USERNAME , picture_url=:URL WHERE uid=:UID');
+        $sel->bindValue(':NAME',$value['name'],PDO::PARAM_STR);
+        $sel->bindValue(':USERNAME',$value['username'],PDO::PARAM_STR);
+        $sel->bindValue(':URL',$value['picture_url'],PDO::PARAM_STR);
+        $sel->bindValue(':UID',$value['uid'],PDO::PARAM_INT);
+        $sel->execute();
     }
 
     public function getUsers() {
