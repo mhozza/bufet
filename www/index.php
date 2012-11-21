@@ -35,7 +35,7 @@
     </div>
     <div class="confirm_pane" id="confirm">
         <div class="amount" id="amount">
-          Množstvo: <span id="amount_val" ></span> <span id="amount_type" ></span> <input type="submit" value="+" onclick="increaseAmount()" /> <input type="submit" value="-" onclick="decreaseAmount()" />
+          Množstvo: <span id="amount_val" ></span> <span id="amount_type" ></span> <input type="submit" class="valuevar" value="+" onclick="increaseAmount()" /> <input type="submit" class="valuevar" value="-" onclick="decreaseAmount()" />
         </div>
         <div class="price" id="price">
           Cena za <span id="amount_type" ></span>: <span id="unit_price" ></span><br/>
