@@ -1,4 +1,4 @@
-var selected_uid = 0;
+var selected_uid = 0;//$.cookie("uid");
 var selected_iid = 0;
 var selected_amount = 10;
 var userData = null;
@@ -8,19 +8,61 @@ var itemDataMap = new Array();
 
 // Loading stuff
 
-submitOrder = function() {
+function loadParameters(uid,iid) {
+  selected_uid = $.cookie("uid");
+  if (uid > 0) {
+    selected_uid = uid;
+  }
+  if (iid > 0) {
+    selected_iid = iid;
+  }
+}
+
+function submitPayment() {
+    if (selected_uid <= 0) {
+        alert('Chyba! Nie je vybraty uzivatel! (To ze si vyvolal tuto akciu je bug)');
+        return;
+    }
+    var price = $('input#payment_input').attr('value') * 1000;
+    if (price <= 0) {
+        alert('Nemozes zaplatit 0 alebo menej!');
+        return;
+    }
+    $.ajax({
+        url:"ajax/submitPayment.php?" + $.param({
+            "user":selected_uid,
+            "price":price
+        }),
+        success:function(result){
+            result = result;
+            if (result) {
+                alert('Tvoja platba bola zaznamenana');
+            } else {
+                alert('Doslo k chybe pri zaznamenani platby!');
+            }
+            redrawEverything();
+        }
+    });
+}
+
+function submitOrder() {
   $.ajax(
     {
-      url:"ajax/submitOrder.php?user="+selected_uid+"&item="+selected_iid+"&amount="+selected_amount+"&price="+itemData[itemDataMap[selected_iid]].price,
+      url:"ajax/submitOrder.php?" + $.param({
+          "user":selected_uid,
+          "item":selected_iid,
+          "amount":selected_amount,
+          "price":itemData[itemDataMap[selected_iid]].price
+      }),
       success:function(result){
-        result = eval(result);
+        result = result;
         loadTransactions();
         loadItems();
         loadUsers();
         if (result) {
-          alert('Order submitted!');
+          alert('Dakujem za nakup!');
         } else {
-          alert('There was error. Try again or use analog method!');
+          alert('Nastala chyba! Skus znova alebo sa zapis na papier!');
         }
         selected_iid = 0;
         selected_uid = 0;
@@ -31,28 +73,35 @@ submitOrder = function() {
   );
 }
 
-increaseAmount = function() {
-  selected_amount = parseInt(selected_amount) + parseInt(itemData[itemDataMap[selected_iid]].divisible);
+function increaseAmount() {
+  selected_amount = parseInt(selected_amount, 10) + parseInt(itemData[itemDataMap[selected_iid]].divisible, 10);
   reloadConfirmDialog();
 }
 
-decreaseAmount = function() {
+function decreaseAmount() {
   var prev = selected_amount;
-  selected_amount = parseInt(selected_amount) - parseInt(itemData[itemDataMap[selected_iid]].divisible);
+  selected_amount = parseInt(selected_amount, 10) - parseInt(itemData[itemDataMap[selected_iid]].divisible, 10);
   if (selected_amount <= 0) {
     selected_amount = prev;
   }
   reloadConfirmDialog();
 }
 
-reloadConfirmDialog = function() {
+function reloadConfirmDialog() {
   // If there is something selected, show third pane
   if (selected_uid > 0 || selected_iid > 0) {
     $("div#confirm").show();
-    $("div#items").css("width", "40%");
+    if (selected_uid > 0) {
+        $("div#people").css("width", "15%");
+        $("div#items").css("width", "55%");
+    } else {
+        $("div#people").css("width", "50%");
+        $("div#items").css("width", "20%");
+    }
   } else {
     $("div#confirm").hide('');
     $("div#items").css("width", "70%");
+    $("div#people").css("width", "30%");
   }
   // If both are selected, we can submit
   if (selected_uid > 0 && selected_iid > 0) {
@@ -63,8 +112,12 @@ reloadConfirmDialog = function() {
   // Show user history if user is selected
   if (selected_uid > 0) {
     $("div#history").show();
+    $("div#balance").show();
+    $("div#payment").show();
   } else {
     $("div#history").hide();
+    $("div#balance").hide();
+    $("div#payment").hide();
   }
   // If item is selected, adjust amount
   if (selected_iid > 0) {
@@ -83,12 +136,12 @@ reloadConfirmDialog = function() {
  }
 
 
-loadUsers = function() {
+function loadUsers() {
   $.ajax(
     {
       url:"ajax/getUsers.php",
       success:function(result){
-        userData = eval(result);
+        userData = result;
         for (var i = 0; i < userData.length; i++) {
           userDataMap[userData[i].uid] = i;
         }
@@ -99,12 +152,12 @@ loadUsers = function() {
   );
 }
 
-loadItems = function() {
+function loadItems() {
   $.ajax(
     {
       url:"ajax/getInventory.php",
       success:function(result){
-        itemData = eval(result);
+        itemData = result;
         for (var i = 0; i < itemData.length; i++) {
           itemDataMap[itemData[i].iid] = i;
         }
@@ -115,73 +168,121 @@ loadItems = function() {
   );
 }
 
-loadTransactions = function() {
+function loadTransactions() {
   $.ajax({
-    url:"ajax/getUserTransactions.php?user="+selected_uid,
+    url:"ajax/getUserTransactions.php?" + $.param({"user":selected_uid}),
     success:function(result) {
-      result = eval(result);
+      result = result;
       drawUserTransactions(result);
+    }
+  });
+}
+
+function loadBalance() {
+  if (selected_uid <= 0) {
+    return ;
+  }
+  $.ajax({
+    url:"ajax/getBalance.php?" + $.param({"user":selected_uid}),
+    success:function(result) {
+      result = result;
+      drawBalance(result);
     }
   });
 }
 
 // Drawing stuff
 
-drawUsers = function() {
+function drawUsers() {
+  loadBalance();
   if (userData == null) {
     //load user data?
     return;
   }
   var result = userData;
-  if (selected_uid > 0) {
-    $("div#people").html(
-      $(
-        "<input>",
-        {
-          type:"submit",
-          value:"Reset selection",
-          class:"reset",
-          click:function(){
-            selected_uid = 0;
-            redrawEverything();
-          }
-        }
-      )
-    );
-  } else {
-    $("div#people").html("");
-  }
+  $("div#people").html("");
   var ul=$("<ul>");
   for (var i = 0; i < result.length; i++) {
     if (selected_uid > 0 && result[i].uid != selected_uid) {
       continue;
     }
-    ul.append($(
+    li = $(
       "<li>",
       {
         class:"people",
-        click: $.proxy(function(uid) {
-          selected_uid = uid;
-          loadTransactions();
-          drawUsers();
-          reloadConfirmDialog();
-        }, this, result[i].uid)
       }
-    ).append(
+    );
+    if (selected_uid > 0){
+      li.append(
+        $(
+          '<input>',
+          {
+            type:"submit",
+            value:"Zruš výber",
+            class:"reset",
+            click:function(){
+              selected_uid = 0;
+              redrawEverything();
+              $('input#payment_input').attr('value',0);
+            }
+          }
+        )
+      );
+    }
+    li.append(
       $(
         '<img>',
         {
           class:"people",
           alt:result[i].name,
-          src:result[i].picture_url
+          src:result[i].picture_url,
+          click: $.proxy(function(uid) {
+            selected_uid = uid;
+            loadTransactions();
+            drawUsers();
+            reloadConfirmDialog();
+          }, this, result[i].uid)
         }
       )
-    ));
+    );
+    if (selected_uid > 0 && selected_uid != $.cookie("uid")) {
+      li.append(
+        $(
+          '<input>',
+          {
+            type:"submit",
+            value:"Zapamätaj",
+            class:"remember",
+            click:function() {
+              $.cookie("uid", selected_uid, {expires: 365});
+              drawUsers();
+            }
+          }
+        )
+      );
+    }
+    if (selected_uid > 0 && selected_uid == $.cookie("uid")) {
+      li.append(
+        $(
+          '<input>',
+          {
+            type:"submit",
+            value:"Odpamätaj",
+            class:"forget",
+            click:function() {
+              $.cookie("uid", 0, {expires: 365});
+              drawUsers();
+            }
+          }
+        )
+      );
+    }
+    ul.append(li);
   }
   ul.appendTo("div#people");
 }
 
-drawItems = function() {
+function drawItems() {
   if (itemData == null) {
     // load data?
     return;
@@ -193,7 +294,7 @@ drawItems = function() {
         "<input>",
         {
           type:"submit",
-          value:"Reset selection",
+          value:"Zruš výber",
           class:"reset",
           click:function(){
             selected_iid = 0;
@@ -205,7 +306,6 @@ drawItems = function() {
   } else {
     $("div#items").html("");
   }
-
   var ul=$("<ul>");
   for (var i = 0; i < result.length; i++) {
     if (selected_iid > 0 && result[i].iid != selected_iid) {
@@ -222,7 +322,13 @@ drawItems = function() {
         }, this, result[i].iid)
       }
     ).append(
-      result[i].name
+      $(
+        "<div>",
+        {
+          class:"item-text"
+        }
+      ).append(result[i].name+" ").append((result[i]['price']/1000)+'€ / '
+).append(result[i]['descr'])
     ).append(
       $(
         '<img>',
@@ -232,15 +338,13 @@ drawItems = function() {
           src:result[i].picture_url
         }
       )
-    ).append(
-      result[i]['descr'] + " "+(result[i]['price']/1000)+'EUR'
     ));
   }
   ul.appendTo("div#items");
 }
 
-drawUserTransactions = function(transactions) {
-  $("div#history").html("");
+function drawUserTransactions(transactions) {
+  $("div#history").html("<h2>História</h2>");
   var ul=$("<ul>");
   for (var i = 0; i < transactions.length; i++) {
     ul.append($(
@@ -252,18 +356,21 @@ drawUserTransactions = function(transactions) {
       transactions[i].date + ": " +
       transactions[i].type + " of " + transactions[i].name + "(" + 
       transactions[i].amount/10 + " " + transactions[i].descr + ")" + " for " +
-      (parseInt(transactions[i].price)*parseInt(transactions[i].amount))/10000
-      + " EUR"
+      (parseInt(transactions[i].price, 10)*parseInt(transactions[i].amount, 10))/10000
+      + "€"
     ));
   }
-
   ul.appendTo("div#history");
-
 }
 
-redrawEverything = function() {
+function drawBalance(balance) {
+  $("div#balance").html("<b>Bilancia:</b> "+balance+"€");
+}
+
+function redrawEverything() {
   reloadConfirmDialog();
   drawUsers();
   drawItems();
-  drawUserTransactions();
+  loadTransactions();
+  loadBalance();
 }

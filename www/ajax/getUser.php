@@ -1,4 +1,5 @@
 <?php
-include('../lib/database.php');
+require_once('../lib/ajaxHeader.php');
+require_once('../lib/database.php');
 $database = BufetData::getInstance();
 print(json_encode($database->getUser($_GET['user'])));
