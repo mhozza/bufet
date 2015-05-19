@@ -1,0 +1,25 @@
+{
+  "name": "bufet",
+  "version": "1.0.0",
+  "description": "M25 bufet app",
+  "main": "www/index.html",
+  "dependencies": {
+    "react": "^0.13.3",
+    "react-mini-router": "^1.1.4",
+    "react-tap-event-plugin": "^0.1.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mhozza/bufet.git"
+  },
+  "author": "Michal Hozza, Michal Nánási, Albert Herencsár",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mhozza/bufet/issues"
+  },
+  "homepage": "https://github.com/mhozza/bufet"
+}

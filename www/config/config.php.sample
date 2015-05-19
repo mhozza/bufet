@@ -1,0 +1,7 @@
+<?php
+$GLOBALS['DATABASE'] = Array (
+  'username' =>'',
+  'password' => '',
+  'host' => '',
+  'database' => ''
+);

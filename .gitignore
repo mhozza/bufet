@@ -1,0 +1,6 @@
+config.php
+.idea/
+images/
+npm-debug.log
+node_modules
+bufet_obrazky/
