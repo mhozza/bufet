@@ -54,7 +54,6 @@ var UserBox = React.createClass({
   render: function() {
     return (
       <div>
-        <h1>Users:</h1>
         <UserList users={this.state.data}/>
       </div>
     );

@@ -16,11 +16,31 @@
       .user-name {
         font-size: 1.5em;
       }
+      img.item-image {
+        object-fit:cover;
+        height:120px;
+      }
+      .item {
+        width:95%;
+      }
+      .item-content.card-content {
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+      .item-title{
+        float:left;
+        margin:0;
+      }
+      p.item-price {
+        text-align: right;
+        padding-top:1em;
+      }
+
     </style>
   </head>
   <body>
     <div id="example"></div>
-    <div id="content" class="container"/>
+    <div id="content"/>
 
     <script type="text/javascript">
       var root = '<?php echo $root; ?>';

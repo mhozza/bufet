@@ -6,7 +6,7 @@ var ItemsView = React.createClass({
   render: function() {
     return (
       <div>
-        <ItemBox url={root + '/ajax/getInventory.php'}/>;
+        <ItemBox url={root + '/ajax/getInventory.php'}/>
       </div>
     );
   }

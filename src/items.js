@@ -3,17 +3,14 @@ var React = require('react');
 var Item = React.createClass({
   render: function() {
     return (
-    <div className="user col s12 m3">
-      <div className="waves-effect waves-dark card-panel grey lighten-5 z-depth-1">
-        <div className="row valign-wrapper">
-          <div className="col s4">
-            <img src={this.props.picture} className="circle responsive-img" />
-          </div>
-          <div className="col s8">
-            <span className="black-text user-name">
-              {this.props.name}
-            </span>
-          </div>
+    <div className="col s6 m2">
+      <div className="item waves-effect waves-dark card grey lighten-5 z-depth-1">
+        <div className="card-image">
+          <img className="item-image" src={this.props.picture}/>
+        </div>
+        <div className="item-content card-content">
+          <span className="item-title card-title grey-text text-darken-4">{this.props.name}</span>
+          <p className="item-price">Cena: {this.props.price + ' \u20AC'}</p>
         </div>
       </div>
     </div>
@@ -24,7 +21,8 @@ var Item = React.createClass({
 var ItemList = React.createClass({
   render: function() {
     var itemNodes = this.props.items.map(function (item) {
-      return <Item key={item.iid} name={item.name} picture={item.picture_url} id={item.iid}/>
+      return <Item key={item.iid} name={item.name} picture={item.picture_url}
+        id={item.iid} price={item.price/100.0}/>
     })
     return (
       <div className="row">
@@ -54,7 +52,6 @@ var ItemBox = React.createClass({
   render: function() {
     return (
       <div>
-        <h1>Items:</h1>
         <ItemList items={this.state.data}/>
       </div>
     );
