@@ -20,7 +20,7 @@
         object-fit:cover;
         height:120px;
       }
-      .item {
+      .item, .user {
         width:95%;
       }
       .item-content.card-content {

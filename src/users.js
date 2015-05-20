@@ -3,8 +3,8 @@ var React = require('react');
 var User = React.createClass({
   render: function() {
     return (
-    <div className="user col s12 m3">
-      <a className="waves-effect waves-dark card-panel grey lighten-5 z-depth-1" href={root + '/' + this.props.id + '/items' }>
+    <div className="col s12 m3">
+      <a className="user waves-effect waves-dark card-panel grey lighten-5 z-depth-1" href={root + '/' + this.props.id + '/items' }>
         <div className="row valign-wrapper">
           <div className="col s4">
             <img src={this.props.picture} className="circle responsive-img" />

@@ -3,14 +3,14 @@ var React = require('react');
 var Item = React.createClass({
   render: function() {
     return (
-    <div className="col s6 m2">
+    <div className="col s6 m3 l2">
       <div className="item waves-effect waves-dark card grey lighten-5 z-depth-1">
         <div className="card-image">
           <img className="item-image" src={this.props.picture}/>
         </div>
         <div className="item-content card-content">
           <span className="item-title card-title grey-text text-darken-4">{this.props.name}</span>
-          <p className="item-price">Cena: {this.props.price + ' \u20AC'}</p>
+          <p className="item-price">Cena:&nbsp;{this.props.price}&euro;</p>
         </div>
       </div>
     </div>
