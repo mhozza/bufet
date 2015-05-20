@@ -2,7 +2,7 @@ var React = require('react'),
     RouterMixin = require('react-mini-router').RouterMixin,
     navigate = require('react-mini-router').navigate,
     UserBox = require('./users.js'),
-    ItemBox = require('./items.js');
+    ItemsView = require('./items_view.js');
 
 var App = React.createClass({
 
@@ -22,7 +22,7 @@ var App = React.createClass({
     },
 
     items: function(user) {
-        return <ItemBox url={root + '/ajax/getInventory.php'}/>;
+        return <ItemsView uid={user}/>;
     },
 
     notFound: function(path) {
