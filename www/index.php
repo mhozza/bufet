@@ -14,7 +14,7 @@
         margin-bottom:0px;
       }
       .user-name {
-        font-size: 1.5em;
+        font-size: 1.3em;
       }
       img.item-image {
         object-fit:cover;
@@ -28,12 +28,10 @@
         padding-bottom: 0;
       }
       .item-title {
-        float:left;
         margin:0;
       }
       p.item-price {
         text-align: right;
-        padding-top:1em;
       }
 
       .panel-user {

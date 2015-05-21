@@ -22,7 +22,7 @@ var User = React.createClass({
 var UserCard = React.createClass({
   render: function() {
     return (
-    <div className="col s12 m3">
+    <div className="col s12 m3 l2">
       <a className="user waves-effect waves-dark card-panel grey lighten-5 black-text z-depth-1" href={root + this.props.id + '/items/' }>
         <User {...this.props}/>
       </a>

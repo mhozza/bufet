@@ -1,7 +1,6 @@
 var React = require('react'),
     User = require('./users.js').User;
 
-
 var NavBar = React.createClass({
   getInitialState: function() {
     return {user: {}};
@@ -20,13 +19,18 @@ var NavBar = React.createClass({
     });
   },
   render: function() {
-    return (
+        var selection = '';
+        if (this.props.selectedItems.size > 0) {
+            selection = <li>{this.props.selectedItems.size} items selected</li>;
+        }
+        return (
         <div className="navbar-fixed">
           <nav>
-            <div className="nav-wrapper red accent-4">
-              <ul className="left">
+            <div className="nav-wrapper red accent-4 row">
+              <ul className="left col">
                 <li><a href={root}><i className="mdi-navigation-arrow-back"></i></a></li>
                 <li className="panel-user"><User name={this.state.user.name} picture={root + this.state.user.picture_url}/></li>
+                {selection}
               </ul>
             </div>
           </nav>
