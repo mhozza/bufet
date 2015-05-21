@@ -27,13 +27,28 @@
         padding-top: 0;
         padding-bottom: 0;
       }
-      .item-title{
+      .item-title {
         float:left;
         margin:0;
       }
       p.item-price {
         text-align: right;
         padding-top:1em;
+      }
+
+      .panel-user {
+        margin-bottom:0px;
+        padding-right: 1em;
+        height: 64px;
+      }
+
+      .panel-user .user-picture {
+        height: 64px;
+      }
+
+      .panel-user img {
+        height: 30px;
+        margin:17px;
       }
 
     </style>
@@ -43,7 +58,7 @@
     <div id="content"/>
 
     <script type="text/javascript">
-      var root = '<?php echo $root; ?>';
+      var root = '<?php echo $root; ?>/';
     </script>
     <script src="<?php echo $root; ?>/js/jquery.js"></script>
     <script src="<?php echo $root; ?>/js/materialize.js"></script>

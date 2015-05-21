@@ -1,12 +1,14 @@
 var React = require('react'),
-    ItemBox = require('./items.js');
+    ItemBox = require('./items.js'),
+    NavBar = require('./panel.js');
 
 
 var ItemsView = React.createClass({
   render: function() {
     return (
       <div>
-        <ItemBox url={root + '/ajax/getInventory.php'}/>
+        <NavBar userurl={root + 'ajax/getUser.php?user=' + this.props.uid}/>
+        <ItemBox url={root + 'ajax/getInventory.php'}/>
       </div>
     );
   }

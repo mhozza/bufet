@@ -3,18 +3,28 @@ var React = require('react');
 var User = React.createClass({
   render: function() {
     return (
-    <div className="col s12 m3">
-      <a className="user waves-effect waves-dark card-panel grey lighten-5 z-depth-1" href={root + '/' + this.props.id + '/items' }>
-        <div className="row valign-wrapper">
-          <div className="col s4">
+      <div className="valign-wrapper">
+        <div className="col s4">
+          <div className="user-picture">
             <img src={this.props.picture} className="circle responsive-img" />
           </div>
-          <div className="col s8">
-            <span className="black-text user-name">
-              {this.props.name}
-            </span>
+        </div>
+        <div className="col s8">
+          <div className="user-name">
+            {this.props.name}
           </div>
         </div>
+      </div>
+    );
+  }
+});
+
+var UserCard = React.createClass({
+  render: function() {
+    return (
+    <div className="col s12 m3">
+      <a className="user waves-effect waves-dark card-panel grey lighten-5 black-text z-depth-1" href={root + this.props.id + '/items/' }>
+        <User {...this.props}/>
       </a>
     </div>
     );
@@ -24,7 +34,7 @@ var User = React.createClass({
 var UserList = React.createClass({
   render: function() {
     var userNodes = this.props.users.map(function (user) {
-      return <User key={user.uid} name={user.name} picture={user.picture_url} id={user.uid}/>
+      return <UserCard key={user.uid} name={user.name} picture={root + user.picture_url} id={user.uid}/>
     })
     return (
       <div className="row">
@@ -60,4 +70,7 @@ var UserBox = React.createClass({
   }
 });
 
-module.exports = UserBox;
+module.exports = {
+  'UserBox': UserBox,
+  'User': User
+}

@@ -1,7 +1,7 @@
 var React = require('react'),
     RouterMixin = require('react-mini-router').RouterMixin,
     navigate = require('react-mini-router').navigate,
-    UserBox = require('./users.js'),
+    UserBox = require('./users.js').UserBox,
     ItemsView = require('./items_view.js');
 
 var App = React.createClass({
@@ -10,7 +10,8 @@ var App = React.createClass({
 
     routes: {
         '/': 'home',
-        '/:user/items': 'items'
+        '': 'home',
+        ':user/items/': 'items'
     },
 
     render: function() {
@@ -18,7 +19,7 @@ var App = React.createClass({
     },
 
     home: function() {
-        return <UserBox url={root + '/ajax/getUsers.php'}/>;
+        return <UserBox url={root + 'ajax/getUsers.php'}/>;
     },
 
     items: function(user) {
