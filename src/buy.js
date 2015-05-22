@@ -47,8 +47,8 @@ var ItemList = React.createClass({
       );
     });
     return (
-        <ul className="collection with-header">
-           <li className="collection-header"><strong>{this.props.title}</strong></li>
+        <ul className="collection with-header grey">
+          <li className="collection-header"><strong>{this.props.title}</strong></li>
           {itemNodes}
         </ul>
     );
@@ -65,20 +65,31 @@ var BuyBox = React.createClass({
     return (
       <div>
         <ItemList title="Nákup" selectedItemsLink={this.props.selectedItemsLink}/>
-        <div className="row ok-cancel-row">
-          <div className="col s12 m6">
-            <button className="btn waves-effect waves-light red accent-4 truncate col s12" type="submit">
-              <i className="mdi-navigation-check left"></i>
-              Kúp
-            </button>
+          <div className="card blue-grey darken-1">
+            <div className="card-content white-text">
+              <div className="row no-margin">
+              <div className="card-title col s12">Celkom</div>
+              <div className="col s8">{this.props.selectedItemsLink.value.size} položky</div>
+              <div className="right align-right item-price col s4">0.00&euro;</div>
+              </div>
+            </div>
+            <div className="card-action">
+              <div className="row ok-cancel-row">
+                <div className="col s12 m6">
+                  <button className="btn waves-effect waves-light red accent-4 truncate col s12" type="submit">
+                    <i className="mdi-navigation-check left"></i>
+                    Kúp
+                  </button>
+                </div>
+                <div className="col s12 m6">
+                  <button className="btn waves-effect waves-light blue-grey lighten-1 truncate col s12" onClick={this.handleCancel}>
+                    <i className="mdi-navigation-close left"></i>
+                    Zrušiť
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="col s12 m6">
-            <button className="btn waves-effect waves-light grey truncate col s12" onClick={this.handleCancel}>
-              <i className="mdi-navigation-close left"></i>
-              Zrušiť
-            </button>
-          </div>
-        </div>
       </div>
     );
   }

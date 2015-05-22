@@ -10,7 +10,7 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,500&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="<?php echo $root; ?>/css/materialize.min.css">
     <style>
-      .user .row {
+      .row.no-margin, .user .row, .card-action .row {
         margin-bottom:0px;
       }
       .user-name {
@@ -30,7 +30,7 @@
       .item-title {
         margin:0;
       }
-      p.item-price {
+      .item-price {
         text-align: right;
       }
 
