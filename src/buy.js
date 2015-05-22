@@ -47,7 +47,8 @@ var ItemList = React.createClass({
       );
     });
     return (
-        <ul className="collection">
+        <ul className="collection with-header">
+           <li className="collection-header"><strong>{this.props.title}</strong></li>
           {itemNodes}
         </ul>
     );
@@ -63,18 +64,18 @@ var BuyBox = React.createClass({
   render: function() {
     return (
       <div>
-        <ItemList selectedItemsLink={this.props.selectedItemsLink}/>
+        <ItemList title="Nákup" selectedItemsLink={this.props.selectedItemsLink}/>
         <div className="row ok-cancel-row">
           <div className="col s12 m6">
             <button className="btn waves-effect waves-light red accent-4 truncate col s12" type="submit">
               <i className="mdi-navigation-check left"></i>
-              Buy
+              Kúp
             </button>
           </div>
           <div className="col s12 m6">
             <button className="btn waves-effect waves-light grey truncate col s12" onClick={this.handleCancel}>
               <i className="mdi-navigation-close left"></i>
-              Cancel
+              Zrušiť
             </button>
           </div>
         </div>

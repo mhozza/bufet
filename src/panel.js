@@ -21,7 +21,7 @@ var NavBar = React.createClass({
   render: function() {
         var selection = '';
         if (this.props.selectedItems.size > 0) {
-            selection = <li>{this.props.selectedItems.size} items selected</li>;
+            selection = <li>označené {this.props.selectedItems.size} položky</li>;
         }
         return (
         <div className="navbar-fixed">
