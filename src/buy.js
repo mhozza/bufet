@@ -18,7 +18,6 @@ var Item = React.createClass({
     });
   },
   handleDismiss: function (event) {
-    console.log(this);
     selectedItems = this.props.selectedItemsLink.value;
     selectedItems.delete(this.props.id);
     this.props.selectedItemsLink.requestChange(selectedItems);
@@ -56,19 +55,24 @@ var ItemList = React.createClass({
 });
 
 var BuyBox = React.createClass({
+  handleCancel: function (event) {
+    selectedItems = this.props.selectedItemsLink.value;
+    selectedItems.clear();
+    this.props.selectedItemsLink.requestChange(selectedItems);
+  },
   render: function() {
     return (
       <div>
         <ItemList selectedItemsLink={this.props.selectedItemsLink}/>
         <div className="row ok-cancel-row">
           <div className="col s12 m6">
-            <button className="btn waves-effect waves-light red accent-4 truncate col s12" type="submit" name="action">
+            <button className="btn waves-effect waves-light red accent-4 truncate col s12" type="submit">
               <i className="mdi-navigation-check left"></i>
               Buy
             </button>
           </div>
           <div className="col s12 m6">
-            <button className="btn waves-effect waves-light grey truncate col s12" type="submit" name="action">
+            <button className="btn waves-effect waves-light grey truncate col s12" onClick={this.handleCancel}>
               <i className="mdi-navigation-close left"></i>
               Cancel
             </button>
