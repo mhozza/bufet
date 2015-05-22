@@ -1,17 +1,20 @@
 var React = require('react');
 
 var Item = React.createClass({
-  getInitialState: function() {
-    return {selected: false};
-  },
   handleClick: function(event) {
-    var selected = !this.state.selected;
-    this.setState({selected: selected});
-    item = this.props.id;
-    this.props.onSelect(item, selected);
+    var selected = !this.props.selectedItemsLink.value.has(this.props.id);
+    var item = this.props.id;
+    selectedItems = this.props.selectedItemsLink.value;
+    if (selected) {
+      selectedItems.add(item);
+    } else {
+      selectedItems.delete(item);
+    }
+    this.props.selectedItemsLink.requestChange(selectedItems);
   },
   render: function() {
-    var color_class = this.state.selected ? "red lighten-3" : "gray lighten-5";
+    var selected = this.props.selectedItemsLink.value.has(this.props.id);
+    var color_class = selected ? "red lighten-3" : "gray lighten-5";
     return (
       <div className="col s6 m3 l2">
         <div className={"item waves-effect waves-dark card z-depth-1 " + color_class} onClick={this.handleClick}>
@@ -40,10 +43,11 @@ var ItemList = React.createClass({
       }
       selectedItemsLink.requestChange(selectedItems);
     };
+    var selectedItemsLink = this.props.selectedItemsLink;
     var itemNodes = this.props.items.map(function (item) {
       return <Item key={item.iid} name={item.name} picture={item.picture_url}
-        id={item.iid} price={(item.price/1000.0).toFixed(2)} descr={item.descr} onSelect={handleItemSelect}/>
-    })
+        id={item.iid} price={(item.price/1000.0).toFixed(2)} descr={item.descr} selectedItemsLink={selectedItemsLink}/>
+    });
     return (
       <div className="row">
         {itemNodes}

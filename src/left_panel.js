@@ -6,7 +6,7 @@ var LeftPanel = React.createClass({
   render: function() {
     return (
         <div className="card-panel red z-depth-2">
-          <BuyBox selectedItems={this.props.selectedItems}/>
+          <BuyBox selectedItemsLink={this.props.selectedItemsLink}/>
           <HistoryBox url={root + "ajax/getUserTransactions.php?user=4"}/>
         </div>
     );

@@ -19,9 +19,10 @@ var Item = React.createClass({
   },
   render: function() {
     return (
-      <div>
+      <span>
         {this.state.item.name}
-      </div>
+        <a href="#!" className="secondary-content"><i className="mdi-navigation-close"></i></a>
+      </span>
     );
   }
 });
@@ -29,11 +30,15 @@ var Item = React.createClass({
 var ItemList = React.createClass({
   render: function() {
     var items = [];
-    for (i of this.props.items) {
+    for (i of this.props.itemsLink.value) {
       items[items.length] = i;
     }
     var itemNodes = items.map(function (item) {
-      return <li key={item}><Item url={root + "ajax/getItem.php?item=" + item}/></li>
+      return (
+        <li key={item} className="collection-item">
+          <Item url={root + "ajax/getItem.php?item=" + item}/>
+        </li>
+      );
     });
     return (
         <ul className="collection">
@@ -46,15 +51,15 @@ var ItemList = React.createClass({
 var BuyBox = React.createClass({
   render: function() {
     return (
-      <div className="card-panel gray">
-        <ItemList items={this.props.selectedItems}/>
+      <div>
+        <ItemList itemsLink={this.props.selectedItemsLink}/>
         <div className="row">
           <button className="btn waves-effect waves-light red col s12 m6" type="submit" name="action">
-            <i className="mdi-content-send right"></i>
+            <i className="mdi-navigation-check left"></i>
             Buy
           </button>
           <button className="btn waves-effect waves-light grey col s12 m6 truncate" type="submit" name="action">
-            <i className="mdi-content-send right"></i>
+            <i className="mdi-navigation-close left"></i>
             Cancel
           </button>
         </div>
