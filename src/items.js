@@ -38,7 +38,6 @@ var ItemList = React.createClass({
       } else {
         selectedItems.delete(item);
       }
-      console.log(selectedItems);
       selectedItemsLink.requestChange(selectedItems);
     };
     var itemNodes = this.props.items.map(function (item) {
