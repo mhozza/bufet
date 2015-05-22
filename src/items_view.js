@@ -15,10 +15,10 @@ var ItemsView = React.createClass({
       <div>
         <NavBar userurl={root + 'ajax/getUser.php?user=' + this.props.uid} selectedItems={this.state.selectedItems}/>
         <div className="row">
-          <div className="col s6 m3 l2">
+          <div className="col s12 m5 l3">
             <LeftPanel selectedItemsLink={this.linkState('selectedItems')}/>
           </div>
-          <div className="col s6 m9 l10">
+          <div className="col s12 m7 l9">
             <ItemBox url={root + 'ajax/getInventory.php'} selectedItemsLink={this.linkState('selectedItems')}/>
           </div>
         </div>

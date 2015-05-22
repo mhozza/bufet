@@ -16,7 +16,7 @@ var Item = React.createClass({
     var selected = this.props.selectedItemsLink.value.has(this.props.id);
     var color_class = selected ? "red lighten-3" : "gray lighten-5";
     return (
-      <div className="col s6 m3 l2">
+      <div className="col s6 m4 l2">
         <div className={"item waves-effect waves-dark card z-depth-1 " + color_class} onClick={this.handleClick}>
           <div className="card-image">
             <img className="item-image" src={this.props.picture}/>

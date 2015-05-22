@@ -17,11 +17,17 @@ var Item = React.createClass({
       }.bind(this)
     });
   },
+  handleDismiss: function (event) {
+    console.log(this);
+    selectedItems = this.props.selectedItemsLink.value;
+    selectedItems.delete(this.props.id);
+    this.props.selectedItemsLink.requestChange(selectedItems);
+  },
   render: function() {
     return (
       <span>
         {this.state.item.name}
-        <a href="#!" className="secondary-content"><i className="mdi-navigation-close"></i></a>
+        <a href="#!" className="secondary-content" onClick={this.handleDismiss}><i className="mdi-navigation-close"></i></a>
       </span>
     );
   }
@@ -30,13 +36,14 @@ var Item = React.createClass({
 var ItemList = React.createClass({
   render: function() {
     var items = [];
-    for (i of this.props.itemsLink.value) {
+    for (i of this.props.selectedItemsLink.value) {
       items[items.length] = i;
     }
+    var selectedItemsLink = this.props.selectedItemsLink;
     var itemNodes = items.map(function (item) {
       return (
         <li key={item} className="collection-item">
-          <Item url={root + "ajax/getItem.php?item=" + item}/>
+          <Item id={item} url={root + "ajax/getItem.php?item=" + item} selectedItemsLink={selectedItemsLink}/>
         </li>
       );
     });
@@ -52,16 +59,20 @@ var BuyBox = React.createClass({
   render: function() {
     return (
       <div>
-        <ItemList itemsLink={this.props.selectedItemsLink}/>
-        <div className="row">
-          <button className="btn waves-effect waves-light red col s12 m6" type="submit" name="action">
-            <i className="mdi-navigation-check left"></i>
-            Buy
-          </button>
-          <button className="btn waves-effect waves-light grey col s12 m6 truncate" type="submit" name="action">
-            <i className="mdi-navigation-close left"></i>
-            Cancel
-          </button>
+        <ItemList selectedItemsLink={this.props.selectedItemsLink}/>
+        <div className="row ok-cancel-row">
+          <div className="col s12 m6">
+            <button className="btn waves-effect waves-light red accent-4 truncate col s12" type="submit" name="action">
+              <i className="mdi-navigation-check left"></i>
+              Buy
+            </button>
+          </div>
+          <div className="col s12 m6">
+            <button className="btn waves-effect waves-light grey truncate col s12" type="submit" name="action">
+              <i className="mdi-navigation-close left"></i>
+              Cancel
+            </button>
+          </div>
         </div>
       </div>
     );
