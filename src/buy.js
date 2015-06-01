@@ -1,4 +1,5 @@
-var React = require('react');
+var React = require('react'),
+    CountInput = require('./count_input.js');
 
 var Item = React.createClass({
   getInitialState: function() {
@@ -24,9 +25,10 @@ var Item = React.createClass({
   },
   render: function() {
     return (
-      <span>
-        {this.state.item.name}
+      <span className="row">
+        <span className="col s7">{this.state.item.name}</span>
         <a href="#!" className="secondary-content" onClick={this.handleDismiss}><i className="mdi-navigation-close"></i></a>
+        <CountInput className="col s3 item-count-input right"/>
       </span>
     );
   }

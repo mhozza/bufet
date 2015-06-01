@@ -1,0 +1,74 @@
+.row.no-margin, .user .row, .card-action .row {
+    margin-bottom: 0px;
+}
+.user-name {
+    font-size: 1.3em;
+}
+img.item-image {
+    object-fit: cover;
+    height: 120px;
+}
+.item, .user {
+    width: 95%;
+}
+.item-content.card-content {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.item-title {
+    margin: 0;
+}
+.item-price {
+    text-align: right;
+}
+.panel-user {
+    margin-bottom: 0px;
+    padding-right: 1em;
+    height: 64px;
+}
+.panel-user .user-picture {
+    height: 64px;
+}
+.panel-user img {
+    height: 30px;
+    margin: 17px;
+}
+
+.item-count-input {
+  height: 1.5em;
+}
+
+/* colors */
+.bgcolor-primary {
+  background-color: #D50000 !important;
+}
+
+.bgcolor-secondary {
+  background-color: #D32F2F !important;
+}
+
+/* CountInput */
+.count-input input::-webkit-outer-spin-button, .count-input input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0;
+    /* <-- Apparently some margin are still there even though it's hidden */
+}
+.count-input input {
+    display: inline;
+    width: auto;
+    max-height: 100%;
+    line-height: 100%;
+    text-align: center;
+}
+.count-input button {
+    text-align: center;
+    min-width:1.2em;
+    padding: 0 0.3em;
+    max-height: 100%;
+    line-height: 100%;
+}
+.count-input {
+  display: flex;
+  /*overflow: hidden;*/
+}
