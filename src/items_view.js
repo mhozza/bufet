@@ -1,14 +1,29 @@
 var React = require('react/addons'),
-    ItemBox = require('./items.js'),
+    ItemList = require('./items.js'),
     LeftPanel = require('./left_panel.js'),
     NavBar = require('./panel.js');
 
 
 var ItemsView = React.createClass({
   mixins: [React.addons.LinkedStateMixin],
-
   getInitialState: function() {
-    return {selectedItems: new Set()};
+    return {
+      items: [],
+      selectedItems: new Set()
+    };
+  },
+  componentDidMount: function() {
+    $.ajax({
+      url: this.props.url,
+      dataType: 'json',
+      cache: false,
+      success: function(data) {
+        this.setState({items: data});
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
   },
   render: function() {
     return (
@@ -16,10 +31,10 @@ var ItemsView = React.createClass({
         <NavBar userurl={root + 'ajax/getUser.php?user=' + this.props.uid} selectedItems={this.state.selectedItems}/>
         <div className="row">
           <div className="col s12 m5 l3">
-            <LeftPanel selectedItemsLink={this.linkState('selectedItems')}/>
+            <LeftPanel items={this.state.items} selectedItemsLink={this.linkState('selectedItems')}/>
           </div>
           <div className="col s12 m7 l9">
-            <ItemBox url={root + 'ajax/getInventory.php'} selectedItemsLink={this.linkState('selectedItems')}/>
+            <ItemList items={this.state.items} selectedItemsLink={this.linkState('selectedItems')}/>
           </div>
         </div>
       </div>

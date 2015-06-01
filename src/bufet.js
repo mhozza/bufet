@@ -23,7 +23,7 @@ var App = React.createClass({
     },
 
     items: function(user) {
-        return <ItemsView uid={user}/>;
+        return <ItemsView url={root + 'ajax/getInventory.php'} uid={user}/>;
     },
 
     notFound: function(path) {
