@@ -21,7 +21,7 @@ var NavBar = React.createClass({
   render: function() {
         var selection = '';
         if (this.props.selectedItems.size > 0) {
-            selection = <li>označené {this.props.selectedItems.size} položky</li>;
+            selection = <li className="hide-on-small-only">označené {this.props.selectedItems.size} položky</li>;
         }
         return (
         <div className="navbar-fixed">

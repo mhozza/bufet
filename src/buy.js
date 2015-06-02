@@ -10,9 +10,9 @@ var Item = React.createClass({
   render: function() {
     return (
       <span className="row">
-        <span className="col s7">{this.props.item.name}</span>
+        <span className="col s5">{this.props.item.name}</span>
         <a href="#!" className="secondary-content" onClick={this.handleDismiss}><i className="mdi-navigation-close"></i></a>
-        <CountInput className="col s3 item-count-input right"
+        <CountInput className="col s6 l5 item-count-input right"
           step={this.props.item.divisible/10} min={this.props.item.divisible/10}
           onCountChange={this.props.onCountChange} count={this.props.count}/>
       </span>
@@ -50,7 +50,7 @@ var ItemList = React.createClass({
       );
     }.bind(this));
     return (
-        <ul className="collection with-header grey">
+        <ul className="collection with-header grey shopping-list">
           <li className="collection-header"><strong>{this.props.title}</strong></li>
           {itemNodes}
         </ul>
@@ -63,7 +63,8 @@ var BuyBox = React.createClass({
     return {
       counts: {},
       items_dict: {},
-      price: 0
+      price: 0,
+      total_count: 0
     };
   },
   componentWillReceiveProps: function(nextProps) {
@@ -81,20 +82,19 @@ var BuyBox = React.createClass({
     }
   },
   computePrice: function() {
-    console.log('price update', this.state.counts);
     price = 0;
+    cnt = 0;
     for (item of this.props.selectedItemsLink.value) {
       count = 1;
       if (typeof this.state.counts[item] !== "undefined") {
         count = this.state.counts[item];
       }
+      cnt += count;
       price += this.state.items_dict[item].price * count / 1000;
-      console.log(item, count, price)
     }
-    this.setState({price: price});
+    this.setState({price: price, total_count: cnt});
   },
   updateCounts : function(counts) {
-    console.log("count update", counts);
     this.setState({counts: counts}, this.computePrice);
   },
   render: function() {
@@ -105,7 +105,7 @@ var BuyBox = React.createClass({
           <div className="card-content white-text">
             <div className="row no-margin">
             <div className="card-title col s12">Celkom</div>
-            <div className="col s8">{this.props.selectedItemsLink.value.size} položky</div>
+            <div className="col s8">{this.state.total_count} položky</div>
             <div className="right align-right item-price col s4">{this.state.price.toFixed(2)}&euro;</div>
             </div>
           </div>

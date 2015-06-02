@@ -32,7 +32,7 @@ var CountInput = React.createClass({
     return (
       <div className={this.props.className + " count-input"}>
         <button className="waves-effect waves-light btn" onClick={this.decCount}>-</button>
-        <input value={this.state.count} onChange={this.handleChange} type="number" />
+        <input value={this.state.count} onChange={this.handleChange} type="number" step={this.props.step} min={this.props.min} max={this.props.max} pattern="0|([1-9][0-9]*)\.[0-9]*"/>
         <button className="waves-effect waves-light btn" onClick={this.incCount}>+</button>
       </div>
     );

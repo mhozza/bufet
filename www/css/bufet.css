@@ -35,7 +35,15 @@ img.item-image {
 }
 
 .item-count-input {
-  height: 1.5em;
+  height: 100%;
+  margin:0;
+  line-height: 100%;
+}
+
+.shopping-list .collection-item {
+  line-height: 36px;
+  padding-left: 0.3em !important;
+  padding-right: 0.3em !important;
 }
 
 /* colors */
@@ -58,12 +66,15 @@ img.item-image {
     display: inline;
     width: auto;
     max-height: 100%;
+    height: auto;
     line-height: 100%;
     text-align: center;
+    margin:0;
+    min-width:2em;
 }
 .count-input button {
     text-align: center;
-    min-width:1.2em;
+    min-width:2em;
     padding: 0 0.3em;
     max-height: 100%;
     line-height: 100%;
