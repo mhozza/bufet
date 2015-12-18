@@ -117,10 +117,11 @@ var BuyBox = React.createClass({
     $.post(this.props.buyurl, data).done(function(data){
       var toastContent = 'Ďakujem za nákup.';
       Materialize.toast(toastContent, 5000);
-      //reload history
     });
-    this.props.selectedItemsLink.requestChange(new Set());
-    this.updateCounts(0);
+    selectedItems = this.props.selectedItemsLink.value;
+    selectedItems.clear();
+    this.props.selectedItemsLink.requestChange(selectedItems);
+    this.props.onBuy();
   },
   render: function() {
     return (
