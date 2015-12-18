@@ -31,7 +31,7 @@ var ItemsView = React.createClass({
         <NavBar userurl={root + 'ajax/getUser.php?user=' + this.props.uid} selectedItems={this.state.selectedItems}/>
         <div className="row">
           <div className="col s12 m5 l3">
-            <LeftPanel items={this.state.items} selectedItemsLink={this.linkState('selectedItems')}/>
+            <LeftPanel buyurl={root + 'ajax/submitOrder.php'} user={this.props.uid} items={this.state.items} selectedItemsLink={this.linkState('selectedItems')}/>
           </div>
           <div className="col s12 m7 l9">
             <ItemList items={this.state.items} selectedItemsLink={this.linkState('selectedItems')}/>
