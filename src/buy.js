@@ -115,10 +115,12 @@ var BuyBox = React.createClass({
       data.items[item] = {amount: count, price: this.state.items_dict[item].price};
     }
     $.post(this.props.buyurl, data).done(function(data){
-      var $toastContent = $('<span>Successfully bought all items. <a href="#">UNDO</a></span>'); //fix this
-      Materialize.toast($toastContent, 5000);
+      var toastContent = 'Ďakujem za nákup.';
+      Materialize.toast(toastContent, 5000);
       //reload history
     });
+    this.props.selectedItemsLink.requestChange(new Set());
+    this.updateCounts(0);
   },
   render: function() {
     return (
@@ -135,7 +137,7 @@ var BuyBox = React.createClass({
           <div className="card-action">
             <div className="row ok-cancel-row">
               <div className="col s12">
-                <button className="btn waves-effect waves-light red accent-4 truncate col s12" type="submit" onClick={this.buy}>
+                <button className="btn waves-effect waves-light red accent-4 truncate col s12" type="submit" onClick={this.buy} disabled={this.state.total_count == 0}>
                   <i className="mdi-navigation-check left"></i>
                   Kúp
                 </button>
